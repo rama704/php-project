@@ -27,7 +27,6 @@ if(!empty($errors)){
             color: #fff;
             min-height: 100vh;
             display: flex;
-            overflow: hidden;
         }
         
         .container { 
@@ -68,12 +67,32 @@ if(!empty($errors)){
             padding: 60px 80px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             max-width: 500px;
             position: relative;
             z-index: 1;
             box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
             overflow-y: auto;
+            padding-top: 120px;
+            padding-bottom: 60px;
+        }
+        
+        /* Custom Scrollbar */
+        .left-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .left-panel::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .left-panel::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #fea40b, #84641c);
+            border-radius: 4px;
+        }
+        
+        .left-panel::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #84641c, #fea40b);
         }
         
         /* Glow Effect */
