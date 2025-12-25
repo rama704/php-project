@@ -14,8 +14,7 @@ $user_id = $_SESSION['user_id'];
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-$profile_success = $profile_error = $password_success = 
-. assword_error = '';
+$profile_success = $profile_error = $password_success = $password_error = '';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -87,7 +87,7 @@ $conn->close();
             </ul>
             <div class="nav-icons">
                 <?php if(isset($_SESSION['user_id'])): ?>
-                    <a href="../profile/profile1.php">Profile</a>
+                    <a href="../PHP-PROJECT/profile/profile1.php">Profile</a>
                     <a href="../login.php" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
                 <?php else: ?>
                     <a href="../login.php">Login</a>
@@ -220,7 +220,7 @@ $conn->close();
                     <i class="fas fa-box-open"></i>
                     <h3>No Products Found</h3>
                     <p>Try adjusting your filters or search terms</p>
-                    <a href="products.php" class="btn btn-primary">View All Products</a>
+                    <a href="product_details.php" class="btn btn-primary">View All Products</a>
                 </div>
             <?php endif; ?>
         </div>
