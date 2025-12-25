@@ -457,7 +457,7 @@ body {
         <div class="nav-wrapper">
             <span class="logo-text">Techify</span>
             <ul class="nav-menu">
-                <li><a href="../index.php">HOME</a></li>
+                <li><a href="../index/index.php">HOME</a></li>
                 <li><a href="../index.php#shop">SHOP</a></li>
                 <li><a href="../index.php#hotdiscounts">HOT DISCOUNTS</a></li>
                 <li><a href="../index.php#topproducts">TOP PRODUCTS</a></li>

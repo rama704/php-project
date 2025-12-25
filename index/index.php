@@ -63,8 +63,8 @@ $conn->close();
                 
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <!-- المستخدم مسجل -->
-                    <a href="../profile.php">Profile</a>
-                    <a href="../logout.php" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
+                    <a href="../profile/profile1.php">Profile</a>
+                    <a href="../login.php" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
                 <?php else: ?>
                     <!-- المستخدم مش مسجل -->
                     <a href="../login.php">Login</a>
