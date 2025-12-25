@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techify - Electronics Store</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-wrapper">
+
+            <span class="logo-text">Techify</span>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="active">HOME</a></li>
+                <li><a href="#shop">SHOP</a></li>
+                <li><a href="#hotdiscounts">HOT DISCOUNTS</a></li>
+                <li><a href="#topproducts">TOP PRODUCTS</a></li>
+
+                <li><a href="#features">FEATURES</a></li>
+                <li><a href="#contact">CONTACT US</a></li>
+            </ul>
+
+          <div class="nav-icons">
+    <button class="icon-btn search-btn"><i class="fas fa-search"></i></button>
+    <button class="icon-btn user-btn" id="userBtn"><i class="fas fa-user"></i></button>
+    <button class="icon-btn cart-btn">
+        <i class="fas fa-shopping-cart"></i> <span class="cart-badge">0</span>
+    </button>
+</div>
+
+
+        </div>
+    </div>
+</nav>
+
+<!-- ================= HERO / HOME ================= -->
+<section class="hero-slider" id="home">
+    <div class="slide active">
+        <div class="container">
+            <div class="slide-content">
+
+                <div class="slide-text">
+                    <span class="badge">Special Offer</span>
+                    <h1>High-Performance Laptops</h1>
+                    <h2>Up to 20% Off</h2>
+                    <button class="btn btn-primary">Shop Now</button>
+                </div>
+
+                <div class="slide-image">
+                    <div class="speaker-main">
+                        <img src="9oRuDc-refreshed-pavilion-gaming-series-launching-next-month.png" alt="Laptop">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="container">
+            <div class="slide-content">
+
+                <div class="slide-text">
+                    <span class="badge">New Arrival</span>
+                    <h1>Premium Headphones</h1>
+                    <h2>Immersive Sound Experience</h2>
+                    <button class="btn btn-primary">Explore Now</button>
+                </div>
+
+                <div class="slide-image">
+                    <div class="speaker-main">
+                        <img src="images__4_-removebg-preview.png" alt="Headphones">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <button class="slider-arrow left" onclick="changeSlide(-1)">❮</button>
+<button class="slider-arrow right" onclick="changeSlide(1)">❯</button>
+
+<div class="slider-dots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+</div>
+
+</section>
+<!-- ================= FEATURED PRODUCTS ================= -->
+<section class="featured-products" id="topproducts">
+    <div class="container">
+        <div class="section-header">
+            <h2>Top Products</h2>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="product-badge">New</span>
+                    <div class="product-img">💻</div>
+                </div>
+                <div class="product-info">
+                    <h3>Ultrabook X1</h3>
+                    <div class="product-price">
+                        <span class="current-price">£1200</span>
+                        <span class="old-price">£1500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="product-badge">New</span>
+                    <div class="product-img">🎧</div>
+                </div>
+                <div class="product-info">
+                    <h3>Noise-Cancelling Headphones</h3>
+                    <div class="product-price">
+                        <span class="current-price">£200</span>
+                        <span class="old-price">£250</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= DISCOUNTS / SHOP ================= -->
+<section class="discounts" id="hotdiscounts">
+    <div class="container">
+        <div class="section-header">
+            <h2>Hot Discounts</h2>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="product-badge">-30%</span>
+                    <div class="product-img">💻</div>
+                </div>
+                <div class="product-info">
+                    <h3>Gaming Laptop Pro</h3>
+                    <div class="product-price">
+                        <span class="current-price">£700</span>
+                        <span class="old-price">£1000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="product-badge">-25%</span>
+                    <div class="product-img">🎧</div>
+                </div>
+                <div class="product-info">
+                    <h3>Wireless Headphones</h3>
+                    <div class="product-price">
+                        <span class="current-price">£75</span>
+                        <span class="old-price">£100</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="features-grid">
+
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                <div class="feature-text">
+                    <h3>FREE SHIPPING</h3>
+                    <p>Fast worldwide delivery</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <div class="feature-text">
+                    <h3>24/7 SUPPORT</h3>
+                    <p>We are always here to help</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-money-bill-wave"></i></div>
+                <div class="feature-text">
+                    <h3>MONEY BACK</h3>
+                    <p>30 days guarantee</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ================= FOOTER / CONTACT ================= -->
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="footer-grid">
+
+            <div class="footer-col">
+                <h3>Techify</h3>
+                <p>
+                    Your trusted electronics store for laptops,
+                    headphones and the latest technology.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul class="footer-list">
+                    <li>📍 Amman, Jordan</li>
+                    <li>📞 +962 7 0000 0000</li>
+                    <li>✉️ support@techify.com</li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-list">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#shop">Shop</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+       
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
