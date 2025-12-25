@@ -465,7 +465,6 @@ body {
                 <li><a href="../index.php#contact">CONTACT US</a></li>
             </ul>
             <div class="nav-icons">
-                <button class="icon-btn"><i class="fas fa-search"></i></button>
                 <button class="icon-btn"><i class="fas fa-user"></i></button>
                 <button class="icon-btn">
                     <i class="fas fa-shopping-cart"></i>

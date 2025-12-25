@@ -53,7 +53,7 @@ $conn->close();
 
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="active">HOME</a></li>
-                <li><a href="#shop">SHOP</a></li>
+                <li><a href="../products.php">SHOP</a></li>
                 <li><a href="#hotdiscounts">HOT DISCOUNTS</a></li>
                 <li><a href="#features">FEATURES</a></li>
                 <li><a href="#contact">CONTACT US</a></li>
@@ -70,8 +70,7 @@ $conn->close();
                     <a href="../login.php">Login</a>
                     <a href="../register.php" >register</a>
                 <?php endif; ?>
-                                <button class="icon-btn search-btn"><i class="fas fa-search"></i></button>
-
+                             
                 <button class="icon-btn cart-btn">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-badge">0</span>
@@ -263,6 +262,52 @@ function goToSlide(index) {
 setInterval(() => {
     changeSlide(1);
 }, 5000);
+
+const navLinks = document.querySelectorAll('.nav-menu a');
+
+// تحديد الرابط النشط
+function setActiveLink() {
+    const currentPath = window.location.pathname.split('/').pop(); // اسم الصفحة الحالي
+
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+
+        // إذا الرابط هو صفحة كاملة (مثل products.php)
+        if(href === currentPath) {
+            link.classList.add('active');
+        } else if(href.startsWith('#')) {
+            // إذا الرابط لقسم داخل الصفحة
+            const section = document.querySelector(href);
+            if(section) {
+                if(window.scrollY >= section.offsetTop - 60 && window.scrollY < section.offsetTop + section.offsetHeight) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            }
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
+// عند تحميل الصفحة أو التمرير
+window.addEventListener('load', setActiveLink);
+window.addEventListener('scroll', setActiveLink);
+
+// تمرير سلس للأقسام
+navLinks.forEach(link => {
+    if(link.getAttribute('href').startsWith('#')) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+});
+
+
+
 </script>
 
 </body>
