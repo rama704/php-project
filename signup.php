@@ -2,14 +2,13 @@
 require_once 'includes/db.connection.php';
  $db = Database::getInstance();
 
- if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $password_confirmation = $_POST['confirm_password'];
-    $mobile = $_POST['phone_number'];
-    $dob = $_POST['date_of_birth'];
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $password_confirmation = trim($_POST['confirm_password']);
+    $mobile = trim($_POST['phone_number']);
+    $dob = trim($_POST['date_of_birth']);
     $errors = [];
 
     if ($password !== $password_confirmation) {
@@ -53,8 +52,8 @@ require_once 'includes/db.connection.php';
     $stmt->bind_param("ssssss", $name, $email, $hashed_password, $role, $mobile, $dob);
 
     if ($stmt->execute()) {
-    header("Location: login.php");
-    exit();
+header(header:"Location: /php-project/login.php");
+ exit();
 
     } else {
     die("Insert failed: " . $stmt->error);

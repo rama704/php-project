@@ -31,12 +31,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->fetch();
 
             if (password_verify($password, $hashed_password)) {
-                $_SESSION['user_id'] = $id;
-                $_SESSION['user_role'] = $role;
-                $_SESSION['user_email'] = $email;
 
-                header("Location: index.php");
-                exit();
+    $_SESSION['user_id'] = $id;
+    $_SESSION['user_role'] = $role;
+    $_SESSION['user_email'] = $email;
+
+    if ($role === 'admin') {
+        header("Location: admin/dashboard.php");
+    } else {
+        header("Location: index.html");
+    }
+    exit();
+}
+
             } else {
                 $errors[] = "Invalid email or password.";
             }
@@ -54,5 +61,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo $err . "<br>";
         }
     }
-}
+
 ?>
