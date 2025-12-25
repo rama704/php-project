@@ -522,7 +522,7 @@
         </form>
 
         <div class="signup-link">
-            Don't have an account? <a href="signup.html">Sign Up</a>
+            Don't have an account? <a href="register.php">Sign Up</a>
         </div>
     </div>
 

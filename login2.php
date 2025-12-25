@@ -39,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($role === 'admin') {
         header("Location: admin/dashboard.php");
     } else {
-        header("Location: index.html");
+        header("Location: ../php-project/index/index.html");
     }
     exit();
 }
