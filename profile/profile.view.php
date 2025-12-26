@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -458,11 +460,11 @@ body {
             <span class="logo-text">Techify</span>
             <ul class="nav-menu">
                 <li><a href="../index/index.php">HOME</a></li>
-                <li><a href="../index.php#shop">SHOP</a></li>
-                <li><a href="../index.php#hotdiscounts">HOT DISCOUNTS</a></li>
-                <li><a href="../index.php#topproducts">TOP PRODUCTS</a></li>
-                <li><a href="../index.php#features">FEATURES</a></li>
-                <li><a href="../index.php#contact">CONTACT US</a></li>
+                <li><a href="../index/index.php#shop">SHOP</a></li>
+                <li><a href="../index/index.php#hotdiscounts">HOT DISCOUNTS</a></li>
+                <li><a href="../index/index.php#topproducts">TOP PRODUCTS</a></li>
+                <li><a href="../index/index.php#features">FEATURES</a></li>
+                <li><a href="../index/index.php#contact">CONTACT US</a></li>
             </ul>
             <div class="nav-icons">
                 <button class="icon-btn"><i class="fas fa-user"></i></button>
@@ -552,7 +554,7 @@ body {
                         <?php while ($order = $orders->fetch_assoc()): ?>
                             <div class="order-card">
                                 <div class="order-header">
-                                    <span class="order-id">#<?= htmlspecialchars($order['order_number']) ?></span>
+                                    <span class="order-id">#<?= htmlspecialchars($order['id']) ?></span>
                                     <span class="order-status status-<?= strtolower($order['status']) ?>">
                                         <?= strtoupper($order['status']) ?>
                                     </span>
@@ -567,13 +569,19 @@ body {
                                     <div class="order-detail">
                                         <span class="order-detail-label">Total Amount</span>
                                         <span class="order-detail-value">
-                                            £<?= number_format($order['total_amount'], 2) ?>
+                                            £<?= number_format($order['total_price'], 2) ?>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="order-items">
                                     <?php
-                                    $items_sql = "SELECT * FROM order_items WHERE order_id = ?";
+                                    // جلب عناصر الطلب
+                                    $items_sql = "
+                                        SELECT oi.quantity, oi.price, p.name as product_name
+                                        FROM order_items oi
+                                        JOIN products p ON oi.product_id = p.id
+                                        WHERE oi.order_id = ?
+                                    ";
                                     $items_stmt = $conn->prepare($items_sql);
                                     $items_stmt->bind_param("i", $order['id']);
                                     $items_stmt->execute();
