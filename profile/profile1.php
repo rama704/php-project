@@ -16,7 +16,6 @@ $conn = $db->getConnection();
 
 $profile_success = $profile_error = $password_success = $password_error = '';
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['action'] === 'update_profile') {
         $name = trim($_POST['name'] ?? '');
