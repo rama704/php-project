@@ -1,11 +1,6 @@
 <?php
-session_start();
 
-// تحقق من تسجيل الدخول
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
-    exit;
-}
+
 
 // تضمين اتصال قاعدة البيانات
 require_once '../includes/db.connection.php';
@@ -270,15 +265,12 @@ $conn->close();
                 <span>Orders</span>
                 <span class="badge"><?= $order_count ?></span>
             </a>
-            <a href="users.php" class="nav-item">
+            <a href="adminusers.php" class="nav-item">
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
-            <a href="settings.php" class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <a href="logout.php" class="nav-item logout">
+            
+            <a href="login.php" class="nav-item logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>

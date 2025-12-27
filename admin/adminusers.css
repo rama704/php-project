@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================= VARIABLES ================= */
+:root {
+    --primary-color: #0b0b0b;
+    --secondary-color: #292929;
+    --accent-color: #fea40b;
+    --gold-color: #84641c;
+    --white: #ffffff;
+    --text-light: #999;
+    --bg-light: #f8f8f8;
+    --sidebar-width: 280px;
+}
+
+/* ================= BODY ================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-light);
+    color: var(--primary-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar-header {
+    padding: 30px;
+    text-align:
+};

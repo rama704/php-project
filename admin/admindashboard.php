@@ -95,10 +95,9 @@ $conn->close();
             <span>Reviews</span>
             <span class="badge"><?php echo $stats['reviews']; ?></span>
         </a>
-        <a href="../logout.php" class="nav-item logout">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
+       <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
     </nav>
 </div>
 
@@ -238,7 +237,7 @@ $conn->close();
     </div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -255,6 +254,25 @@ document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.add('active');
     }
 });
+/* Logout Confirmation */
+function confirmLogout(event) {
+    event.preventDefault();
+    
+    Swal.fire({
+        title: 'Logout?',
+        text: 'Are you sure you want to logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'logout.php';
+        }
+    });
+}
 </script>
 
 </body>

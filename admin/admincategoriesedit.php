@@ -69,9 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="admincategories.php" class="nav-item">
             <i class="fas fa-tags"></i> Categories
         </a>
-        <a href="logout.php" class="nav-item logout">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
+        
+</a>
     </nav>
 </aside>
 

@@ -51,14 +51,10 @@ $result = mysqli_query($conn, $query);
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
-            <a href="settings.php" class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <a href="logout.php" class="nav-item logout">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+            <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+</a>
         </nav>
     </aside>
 
@@ -211,7 +207,25 @@ $result = mysqli_query($conn, $query);
             });
         }
 
-       
+       /* Logout Confirmation */
+function confirmLogout(event) {
+    event.preventDefault();
+    
+    Swal.fire({
+        title: 'Logout?',
+        text: 'Are you sure you want to logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'logout.php';
+        }
+    });
+}
     </script>
 
 </body>
