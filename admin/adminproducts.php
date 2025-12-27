@@ -42,7 +42,7 @@ $result = mysqli_query($conn, $query);
                 <i class="fas fa-tags"></i>
                 <span>Categories</span>
             </a>
-            <a href="orders.php" class="nav-item">
+            <a href="adminorders.php" class="nav-item">
                 <i class="fas fa-shopping-cart"></i>
                 <span>Orders</span>
             </a>

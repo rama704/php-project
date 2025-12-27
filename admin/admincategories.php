@@ -43,7 +43,7 @@ $result = mysqli_query($conn, $query);
                 <span>Categories</span>
                 <span class="badge"><?= $category_count ?></span>
             </a>
-            <a href="orders.php" class="nav-item">
+            <a href="adminorders.php" class="nav-item">
                 <i class="fas fa-shopping-cart"></i>
                 <span>Orders</span>
             </a>

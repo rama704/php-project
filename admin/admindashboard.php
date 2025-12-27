@@ -80,7 +80,7 @@ $conn->close();
             <span>Categories</span>
             <span class="badge"><?php echo $stats['categories']; ?></span>
         </a>
-        <a href="orders.php" class="nav-item">
+        <a href="adminorders.php" class="nav-item">
             <i class="fas fa-shopping-bag"></i>
             <span>Orders</span>
             <span class="badge"><?php echo $stats['orders']; ?></span>
