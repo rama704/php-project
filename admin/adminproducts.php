@@ -1,6 +1,8 @@
 <?php
 // 1. Database Connection
 require_once '../includes/db.connection.php';
+require_once 'admin_auth.php';
+
 $db = Database::getInstance();
 $conn = $db->getConnection();
 $query = "SELECT products.id, products.name, products.price, products.discount_price, products.stock, products.image, categories.name as category_name 
@@ -46,7 +48,7 @@ $result = mysqli_query($conn, $query);
                 <i class="fas fa-shopping-cart"></i>
                 <span>Orders</span>
             </a>
-            <a href="users.php" class="nav-item">
+            <a href="adminusers.php" class="nav-item">
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>

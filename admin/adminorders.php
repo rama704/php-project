@@ -2,12 +2,14 @@
 
 
 
-// تضمين اتصال قاعدة البيانات
+
 require_once '../includes/db.connection.php';
+require_once 'admin_auth.php';
+
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-// استعلام جلب الطلبات مع أسماء المستخدمين
+
 $sql = "
     SELECT o.*, u.name AS username
     FROM orders o

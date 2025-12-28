@@ -1,5 +1,7 @@
 <?php
 require_once '../includes/db.connection.php';
+require_once 'admin_auth.php';
+
 $db = Database::getInstance();
 $conn = $db->getConnection();
 

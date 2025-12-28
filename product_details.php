@@ -36,6 +36,7 @@ if ($product['stock'] == 0) {
     $stockText = "Out of stock";
 } elseif ($product['stock'] <= 20) {
     $stockClass .= " low-stock";
+    $stockText .= " (Low stock)";
 }
 
 
@@ -1115,7 +1116,7 @@ $conn->close();
             ← Back to Shop
         </a>
         <div class="product-detail-card">
-            <form id="productForm" method="POST" action="add_to_cart.php">
+            <form id="productForm" method="POST" action="checkout.php">
                 <div class="product-layout">
                     <!-- Product Image Section -->
                     <div class="product-image-section">
@@ -1168,12 +1169,18 @@ $conn->close();
                             <!-- Buy Now Button -->
                             <button type="button" class="btn btn-primary" onclick="buyNow()">
                                 🛒 Buy Now
+                                 
                             </button>
                         </div>
                         <div class="success-message" id="successMessage">
                             ✓ Product added to cart successfully!
+<<<<<<< HEAD
 
 </div>
+=======
+                           
+                        </div>
+>>>>>>> 2e995569a3c187f46ef7deb74006a0c8ad71e450
                     </div>
                 </div>
                 <!-- Product Details Table -->
@@ -1372,7 +1379,9 @@ $conn->close();
         function buyNow() {
 
             // This function will add the product to the cart and redirect to checkout
-            document.getElementById('productForm').submit(); // Submit the form to add to cart
+            document.getElementById('productForm').submit();
+            form.action='checkout.php';
+            form.submit(); // Submit the form to add to cart
             // You might want to redirect to checkout page after adding to cart
             // window.location.href = 'checkout.php';
             form.action = 'checkout.php';
