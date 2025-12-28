@@ -69,8 +69,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="admincategories.php" class="nav-item">
             <i class="fas fa-tags"></i> Categories
         </a>
-        
-</a>
+        <a href="adminorders.php" class="nav-item">
+            <i class="fas fa-shopping-cart"></i> Orders
+            <span class="badge"><?= $order_count ?></span>
+        </a>
+        <a href="adminusers.php" class="nav-item">
+            <i class="fas fa-users"></i> Users
+        </a>
+        <a href="reviews.php" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Reviews</span>
+            <span class="badge"><?php echo $stats['reviews']; ?></span>
+        </a>
+         <a href="adminslides.php" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Slides</span>
+            <span class="badge"><?php echo $stats['slides']; ?></span>
+        </a>
     </nav>
 </aside>
 

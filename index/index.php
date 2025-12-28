@@ -1,31 +1,38 @@
 <?php
-session_start(); // مهم جداً لتتبع المستخدم
+session_start(); 
 require_once '../includes/db.connection.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-// جلب أعلى 4 منتجات عليها خصم
+//يلي عليهم خصم 
 $query = "SELECT id, category_id, name, description, price, discount_price, image 
           FROM products 
           WHERE discount_price IS NOT NULL 
           ORDER BY created_at DESC 
           LIMIT 4";
 
-$result = $conn->query($query);
+$stmt = $conn->prepare($query);
 $discountProducts = [];
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $discountProducts[] = $row;
-    }
+if ($stmt->execute()) {
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $discountProducts[] = $row;
+        }}
 }
 // جلب المنتجات للسلايدز الرئيسي
-$queryslides="SELECT title ,subtitle,badge,image,link FROM slides order by id ASC";
-$resultslides=$conn->query($queryslides);
+$queryslides = "
+SELECT title, subtitle, badge, image, product_id
+FROM slides
+";
+$stmtslides = $conn->prepare($queryslides);
 $slidesdata=[];
-if($resultslides->num_rows>0){
-    while($row=$resultslides->fetch_assoc()){
-        $slidesdata[]=$row;
-    }
+if($stmtslides->execute()){
+    $resultslides = $stmtslides->get_result();
+    if($resultslides->num_rows>0){
+        while($row=$resultslides->fetch_assoc()){
+            $slidesdata[]=$row;
+        }}
 }
 
 
@@ -91,11 +98,11 @@ $conn->close();
                         <span class="badge"><?php echo htmlspecialchars($slide['badge']); ?></span>
                         <h1><?php echo htmlspecialchars($slide['title']); ?></h1>
                         <h2><?php echo htmlspecialchars($slide['subtitle']); ?></h2>
-                        <a href="<?php echo $slide['link']; ?>" class="btn btn-primary">Shop Now</a>
+<a href="../product.php?id=<?php echo $slide['product_id']; ?>">Shop Now</a>
                     </div>
                     <div class="slide-image">
                         <div class="speaker-main">
-                            <img src="images/<?php echo $slide['image']; ?>" alt="<?php echo htmlspecialchars($slide['title']); ?>">
+                            <img src="../index/images/<?php echo $slide['image']; ?>" alt="<?php echo htmlspecialchars($slide['title']); ?>">
                         </div>
                     </div>
                 </div>
@@ -133,7 +140,7 @@ $conn->close();
                             <span class="product-badge">-<?php echo $discountPercent; ?>%</span>
                             <div class="product-img">
                                 <?php if(!empty($product['image'])): ?>
-                                    <img src="images/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                                    <img src="../index/images/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
                                 <?php else: ?>
                                     📦
                                 <?php endif; ?>
@@ -142,8 +149,8 @@ $conn->close();
                         <div class="product-info">
                             <h3><?php echo htmlspecialchars($product['name']); ?></h3>
                             <div class="product-price">
-                                <span class="current-price">£<?php echo $product['discount_price']; ?></span>
-                                <span class="old-price">£<?php echo $product['price']; ?></span>
+                                <span class="current-price">$<?php echo $product['discount_price']; ?></span>
+                                <span class="old-price">$<?php echo $product['price']; ?></span>
                             </div>
                         </div>
                     </div>

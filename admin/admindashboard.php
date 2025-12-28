@@ -12,7 +12,8 @@ $stats = [
     'categories' => 0,
     'orders' => 0,
     'users' => 0,
-    'reviews' => 0
+    'reviews' => 0,
+    'slides' => 0
 ];
 
 // Count products
@@ -95,9 +96,15 @@ $conn->close();
             <span>Reviews</span>
             <span class="badge"><?php echo $stats['reviews']; ?></span>
         </a>
-       <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
-    <i class="fas fa-sign-out-alt"></i>
-    <span>Logout</span>
+         <a href="adminslides.php" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Slides</span>
+            <span class="badge"><?php echo $stats['slides']; ?></span>
+        </a>
+        <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
     </nav>
 </div>
 

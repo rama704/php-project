@@ -4,6 +4,11 @@ require_once 'includes/db.connection.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
+// ================== إعدادات Pagination ==================
+$products_per_page = 2; // عدد المنتجات في كل صفحة
+$current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$offset = ($current_page - 1) * $products_per_page;
+
 // ================== فلترة البحث ==================
 $filters = [
     'search' => $_GET['search'] ?? '',
@@ -12,34 +17,47 @@ $filters = [
     'sort' => $_GET['sort'] ?? 'newest'
 ];
 
-$price = $filters['price']; // متغير للسعر للاستخدام في الـ HTML
+$price = $filters['price'];
 $search = $filters['search'];
 $category = $filters['category'];
 $sort = $filters['sort'];
 
 // بناء استعلام SQL ديناميكي
 $sql = "SELECT * FROM products WHERE 1=1";
+$count_sql = "SELECT COUNT(*) as total FROM products WHERE 1=1";
 $params = [];
 $types = "";
 
 // فلترة البحث والفئة والسعر
 if ($filters['search']) {
     $sql .= " AND name LIKE ?";
+    $count_sql .= " AND name LIKE ?";
     $params[] = "%{$filters['search']}%";
     $types .= "s";
 }
 
 if ($filters['category']) {
     $sql .= " AND category_id = ?";
+    $count_sql .= " AND category_id = ?";
     $params[] = $filters['category'];
     $types .= "i";
 }
 
 if ($filters['price'] !== '') {
     $sql .= " AND price <= ?";
+    $count_sql .= " AND price <= ?";
     $params[] = $filters['price'];
     $types .= "d";
 }
+
+// حساب إجمالي عدد المنتجات
+$count_stmt = $conn->prepare($count_sql);
+if ($params) {
+    $count_stmt->bind_param($types, ...$params);
+}
+$count_stmt->execute();
+$total_products = $count_stmt->get_result()->fetch_assoc()['total'];
+$total_pages = ceil($total_products / $products_per_page);
 
 // ترتيب النتائج
 $order = match ($filters['sort']) {
@@ -50,10 +68,19 @@ $order = match ($filters['sort']) {
 };
 $sql .= " ORDER BY $order";
 
+// إضافة LIMIT و OFFSET
+$sql .= " LIMIT ? OFFSET ?";
+
 // تنفيذ الاستعلام
 $stmt = $conn->prepare($sql);
-if ($params)
+if ($params) {
+    $types .= "ii";
+    $params[] = $products_per_page;
+    $params[] = $offset;
     $stmt->bind_param($types, ...$params);
+} else {
+    $stmt->bind_param("ii", $products_per_page, $offset);
+}
 $stmt->execute();
 $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
@@ -150,8 +177,7 @@ $conn->close();
                         <select name="sort">
                             <option value="newest" <?= $sort == 'newest' ? 'selected' : '' ?>>Newest First</option>
                             <option value="price_low" <?= $sort == 'price_low' ? 'selected' : '' ?>>Price: Low to High</option>
-                            <option value="price_high" <?= $sort == 'price_high' ? 'selected' : '' ?>>Price: High to Low
-                            </option>
+                            <option value="price_high" <?= $sort == 'price_high' ? 'selected' : '' ?>>Price: High to Low</option>
                             <option value="name" <?= $sort == 'name' ? 'selected' : '' ?>>Name A-Z</option>
                         </select>
                     </div>
@@ -169,7 +195,7 @@ $conn->close();
 
             <!-- ================= RESULTS INFO ================= -->
             <div class="results-info">
-                <p>Showing <strong><?= count($products) ?></strong> products</p>
+                <p>Showing <strong><?= min($offset + 1, $total_products) ?> - <?= min($offset + $products_per_page, $total_products) ?></strong> of <strong><?= $total_products ?></strong> products</p>
             </div>
 
             <!-- ================= PRODUCTS GRID ================= -->
@@ -193,7 +219,7 @@ $conn->close();
                             <div class="product-image">
                                 <div class="product-img">
                                     <?php if (!empty($product['image'])): ?>
-                                        <img src="images/<?= htmlspecialchars($product['image']) ?>"
+                                        <img src="../index/images/<?= htmlspecialchars($product['image']) ?>"
                                             alt="<?= htmlspecialchars($product['name']) ?>">
                                     <?php else: ?>
                                         <i class="fas fa-box"></i>
@@ -228,10 +254,70 @@ $conn->close();
                         <i class="fas fa-box-open"></i>
                         <h3>No Products Found</h3>
                         <p>Try adjusting your filters or search terms</p>
-                        <a href="product_details.php" class="btn btn-primary">View All Products</a>
+                        <a href="products.php" class="btn btn-primary">View All Products</a>
                     </div>
                 <?php endif; ?>
             </div>
+
+            <!-- ================= PAGINATION ================= -->
+            <?php if ($total_pages > 1): ?>
+                <div class="pagination">
+                    <?php
+                    // بناء URL للحفاظ على الفلاتر
+                    $query_params = $_GET;
+                    unset($query_params['page']);
+                    $base_url = 'products.php?' . http_build_query($query_params);
+                    $separator = empty($query_params) ? '' : '&';
+                    ?>
+
+                    <!-- زر Previous -->
+                    <?php if ($current_page > 1): ?>
+                        <a href="<?= $base_url . $separator ?>page=<?= $current_page - 1 ?>" class="pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </a>
+                    <?php endif; ?>
+
+                    <!-- أرقام الصفحات -->
+                    <div class="pagination-numbers">
+                        <?php
+                        $start_page = max(1, $current_page - 2);
+                        $end_page = min($total_pages, $current_page + 2);
+
+                        // إظهار الصفحة الأولى دائماً
+                        if ($start_page > 1): ?>
+                            <a href="<?= $base_url . $separator ?>page=1" class="pagination-number">1</a>
+                            <?php if ($start_page > 2): ?>
+                                <span class="pagination-dots">...</span>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <!-- الصفحات المحيطة بالصفحة الحالية -->
+                        <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                            <a href="<?= $base_url . $separator ?>page=<?= $i ?>" 
+                               class="pagination-number <?= $i == $current_page ? 'active' : '' ?>">
+                                <?= $i ?>
+                            </a>
+                        <?php endfor; ?>
+
+                        <!-- إظهار الصفحة الأخيرة دائماً -->
+                        <?php if ($end_page < $total_pages): ?>
+                            <?php if ($end_page < $total_pages - 1): ?>
+                                <span class="pagination-dots">...</span>
+                            <?php endif; ?>
+                            <a href="<?= $base_url . $separator ?>page=<?= $total_pages ?>" class="pagination-number">
+                                <?= $total_pages ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- زر Next -->
+                    <?php if ($current_page < $total_pages): ?>
+                        <a href="<?= $base_url . $separator ?>page=<?= $current_page + 1 ?>" class="pagination-btn">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
 
         </div>
     </section>
@@ -271,7 +357,6 @@ $conn->close();
     <script>
         function addToCart(productId) {
             alert('Product added to cart! (Product ID: ' + productId + ')');
-            // هنا يمكنك إضافة كود AJAX لإضافة المنتج للسلة
         }
     </script>
 

@@ -5,7 +5,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: products.php");
     exit;
 }
-$product_id = (int) $_GET['id'];
+$product_id =  $_GET['id'];
 $db = Database::getInstance();
 $conn = $db->getConnection();
 /* ====== Get Product ====== */
@@ -38,6 +38,8 @@ if ($product['stock'] == 0) {
     $stockClass .= " low-stock";
 }
 
+
+
 /* ====== Reviews Data ====== */
 // Average Rating
 $avgRatingQuery = "SELECT AVG(rating) as avg_rating FROM reviews WHERE product_id = ?";
@@ -46,6 +48,7 @@ $avgStmt->bind_param("i", $product_id);
 $avgStmt->execute();
 $avgResult = $avgStmt->get_result();
 $avgRatingData = $avgResult->fetch_assoc();
+//بقربها لمنزلتين عشريتين
 $averageRating = $avgRatingData['avg_rating'] ? round($avgRatingData['avg_rating'], 2) : 0;
 
 // Reviews Count
@@ -64,6 +67,7 @@ $distStmt->execute();
 $distResult = $distStmt->get_result();
 $ratingDistribution = [];
 while ($row = $distResult->fetch_assoc()) {
+    //عشان اعرف اكم حدا علق عليها بكل تقييم
     $ratingDistribution[$row['rating']] = $row['count'];
 }
 // Ensure all ratings from 5 to 1 exist in the array, even if count is 0
@@ -1168,7 +1172,8 @@ $conn->close();
                         </div>
                         <div class="success-message" id="successMessage">
                             ✓ Product added to cart successfully!
-                        </div>
+
+</div>
                     </div>
                 </div>
                 <!-- Product Details Table -->
@@ -1365,10 +1370,14 @@ $conn->close();
     </footer>
     <script>
         function buyNow() {
+
             // This function will add the product to the cart and redirect to checkout
             document.getElementById('productForm').submit(); // Submit the form to add to cart
             // You might want to redirect to checkout page after adding to cart
             // window.location.href = 'checkout.php';
+            form.action = 'checkout.php';
+                form.submit();
+
         }
     </script>
 </body>
