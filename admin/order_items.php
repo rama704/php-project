@@ -210,19 +210,16 @@ $conn->close();
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
-            <a href="adminreviews.php" class="nav-item">
-                <i class="fas fa-star"></i>
-                <span>Reviews</span>
-            </a>
-            <a href="adminslides.php" class="nav-item">
-                <i class="fas fa-star"></i>
-                <span>Slides</span>
-            </a>
-            </a>
-            <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+          <a href="reviews.php" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Reviews</span>
+            <span class="badge"><?php echo $stats['reviews']; ?></span>
+        </a>
+         
+           <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+</a>
         </nav>
     </aside>
 
@@ -371,7 +368,7 @@ $conn->close();
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'login.php';
+                    window.location.href = '../logout.php';
                 }
             });
         }

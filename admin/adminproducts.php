@@ -1,8 +1,6 @@
 <?php
 // 1. Database Connection
 require_once '../includes/db.connection.php';
-require_once 'admin_auth.php';
-
 $db = Database::getInstance();
 $conn = $db->getConnection();
 $query = "SELECT products.id, products.name, products.price, products.discount_price, products.stock, products.image, categories.name as category_name 
@@ -50,18 +48,15 @@ $result = mysqli_query($conn, $query);
                 <i class="fas fa-shopping-cart"></i>
                 <span>Orders</span>
             </a>
-            <a href="adminusers.php" class="nav-item">
+            <a href="users.php" class="nav-item">
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
             <a href="adminreviews.php" class="nav-item">
-                <i class="fas fa-star"></i>
-                <span>Reviews</span>
-            </a>
-            <a href="adminslides.php" class="nav-item">
-                <i class="fas fa-star"></i>
-                <span>Slides</span>
-            </a>
+            <i class="fas fa-star"></i>
+            <span>Reviews</span>
+            
+        </a>
             <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
@@ -321,7 +316,7 @@ $result = mysqli_query($conn, $query);
         cancelButtonText: 'Cancel'
         }).then((result) => {
         if (result.isConfirmed) {
-        window.location.href = 'logout.php';
+        window.location.href = '../logout.php';
         }
         });
         }

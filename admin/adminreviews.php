@@ -304,12 +304,6 @@ $conn->close();
                 <i class="fas fa-star"></i>
                 <span>Reviews</span>
             </a>
-            
-            </a>
-            <a href="settings.php" class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
             <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
@@ -531,7 +525,7 @@ $conn->close();
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'login.php';
+                    window.location.href = '../logout.php';
                 }
             });
         }

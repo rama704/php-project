@@ -98,19 +98,11 @@ $conn->close();
             <span>Reviews</span>
             <span class="badge"><?php echo $stats['reviews']; ?></span>
         </a>
-
-         <a href="adminslides.php" class="nav-item">
-            <i class="fas fa-star"></i>
-            <span>Slides</span>
-            <span class="badge"><?php echo $stats['slides']; ?></span>
-        </a>
+         
         <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
         </a>
-
-      
-</nav>
     </nav>
 </div>
 
@@ -283,7 +275,7 @@ function confirmLogout(event) {
         cancelButtonText: 'Cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'logout.php';
+            window.location.href = '../logout.php';
         }
     });
 }

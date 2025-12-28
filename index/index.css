@@ -194,7 +194,7 @@ body {
     color: #dc3545;
 }
 
-.nav-icons a[href*="logout"]:hover {
+.nav-icons a[href*=logout]:hover {
     background: #dc3545;
     border-color: #dc3545;
     color: var(--white);
@@ -247,6 +247,7 @@ body {
     flex: 1;
     animation: slideInLeft 0.8s ease-out;
 }
+
 
 @keyframes slideInLeft {
     from {

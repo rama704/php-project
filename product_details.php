@@ -1124,8 +1124,15 @@ $conn->close();
                             <div class="discount-badge">-<?= $discountPercent ?>%</div>
                         <?php endif; ?>
                         <div class="product-image-wrapper">
-                            <img src="images/<?= htmlspecialchars($product['image']) ?>"
-                                alt="<?= htmlspecialchars($product['name']) ?>" class="product-image">
+                              <?php
+// إذا كان اسم الصورة يبدأ بـ "images/"، احذفه
+$image_path = $product['image'];
+if (strpos($image_path, 'images/') === 0) {
+    $image_path = substr($image_path, 7); // حذف "images/"
+}
+?>
+<img src="/php-project/index/images/<?= htmlspecialchars($image_path) ?>" ...     alt="<?= htmlspecialchars($product['name']) ?>">
+                                            
                         </div>
                     </div>
                     <!-- Product Info Section -->
@@ -1174,6 +1181,7 @@ $conn->close();
                         </div>
                         <div class="success-message" id="successMessage">
                             ✓ Product added to cart successfully!
+
 
 
                         </div>
@@ -1227,6 +1235,9 @@ $conn->close();
                         <?php for ($i = 1; $i <= 5; $i++): ?>
                             <i class="fas fa-star <?= ($i <= round($averageRating)) ? 'filled' : '' ?>"></i>
                         <?php endfor; ?>
+                           
+                        </div>
+
                     </div>
                 </div>
                 <div class="rating-distribution">

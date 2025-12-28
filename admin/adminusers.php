@@ -54,14 +54,12 @@ $total_users = mysqli_num_rows($result);
                 <span>Users</span>
                 <span class="badge"><?= $total_users ?></span>
             </a>
-           <a href="adminreviews.php" class="nav-item">
-    <i class="fas fa-star"></i>
-    <span>Reviews</span>
-</a>
-<a href="adminslides.php" class="nav-item">
-    <i class="fas fa-star"></i>
-    <span>Slides</span>
-</a>
+            <a href="adminreviews.php" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Reviews</span>
+            
+        </a>
+        
          <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
     <i class="fas fa-sign-out-alt"></i>
     <span>Logout</span>
@@ -250,7 +248,7 @@ function confirmLogout(event) {
         cancelButtonText: 'Cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = '../login2.php';
+            window.location.href = '../logout.php';
         }
     });
 }

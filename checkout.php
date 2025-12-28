@@ -633,7 +633,7 @@ $conn->close();
 
                     <button type="submit" class="btn btn-primary submit-btn">
                         <i class="fas fa-lock"></i>
-                        Complete Fake Payment (£<?= number_format($grandTotal, 2) ?>)
+                        Complete Fake Payment ($<?= number_format($grandTotal, 2) ?>)
                     </button>
                 </form>
             </div>
@@ -655,10 +655,10 @@ $conn->close();
                             </div>
                             <div class="order-item-details">
                                 <h4><?= htmlspecialchars($item['name']) ?></h4>
-                                <p>Qty: <?= $item['quantity'] ?> × £<?= number_format($item['price'], 2) ?></p>
+                                <p>Qty: <?= $item['quantity'] ?> × $<?= number_format($item['price'], 2) ?></p>
                             </div>
                             <div class="order-item-price">
-                                £<?= number_format($item['subtotal'], 2) ?>
+                                $<?= number_format($item['subtotal'], 2) ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -667,7 +667,7 @@ $conn->close();
                 <div class="summary-calculations">
                     <div class="summary-row">
                         <span>Subtotal (<?= $totalQuantity ?> items):</span>
-                        <span>£<?= number_format($totalPrice, 2) ?></span>
+                        <span>$<?= number_format($totalPrice, 2) ?></span>
                     </div>
                     
                     <div class="summary-row">
@@ -677,12 +677,12 @@ $conn->close();
                     
                     <div class="summary-row">
                         <span>Tax (VAT 15%):</span>
-                        <span>£<?= number_format($tax, 2) ?></span>
+                        <span>$<?= number_format($tax, 2) ?></span>
                     </div>
                     
                     <div class="summary-row total">
                         <span>Total:</span>
-                        <span>£<?= number_format($grandTotal, 2) ?></span>
+                        <span>$<?= number_format($grandTotal, 2) ?></span>
                     </div>
                 </div>
 

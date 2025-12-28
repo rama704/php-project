@@ -272,13 +272,11 @@ $conn->close();
                 <span>Users</span>
             </a>
             <a href="adminreviews.php" class="nav-item">
-    <i class="fas fa-star"></i>
-    <span>Reviews</span>
-</a>
-<a href="adminslides.php" class="nav-item">
-    <i class="fas fa-star"></i>
-    <span>Slides</span>
-</a>
+            <i class="fas fa-star"></i>
+            <span>Reviews</span>
+          
+        </a>
+       
             <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
