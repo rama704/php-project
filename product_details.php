@@ -5,7 +5,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: products.php");
     exit;
 }
-$product_id = (int) $_GET['id'];
+$product_id =  $_GET['id'];
 $db = Database::getInstance();
 $conn = $db->getConnection();
 /* ====== Get Product ====== */
@@ -36,6 +36,7 @@ if ($product['stock'] == 0) {
     $stockText = "Out of stock";
 } elseif ($product['stock'] <= 20) {
     $stockClass .= " low-stock";
+    $stockText .= " (Low stock)";
 }
 
 /* ====== Reviews Data ====== */
@@ -1111,7 +1112,7 @@ $conn->close();
             ← Back to Shop
         </a>
         <div class="product-detail-card">
-            <form id="productForm" method="POST" action="add_to_cart.php">
+            <form id="productForm" method="POST" action="checkout.php">
                 <div class="product-layout">
                     <!-- Product Image Section -->
                     <div class="product-image-section">
@@ -1164,10 +1165,12 @@ $conn->close();
                             <!-- Buy Now Button -->
                             <button type="button" class="btn btn-primary" onclick="buyNow()">
                                 🛒 Buy Now
+                                 
                             </button>
                         </div>
                         <div class="success-message" id="successMessage">
                             ✓ Product added to cart successfully!
+                           
                         </div>
                     </div>
                 </div>
@@ -1366,7 +1369,9 @@ $conn->close();
     <script>
         function buyNow() {
             // This function will add the product to the cart and redirect to checkout
-            document.getElementById('productForm').submit(); // Submit the form to add to cart
+            document.getElementById('productForm').submit();
+            form.action='checkout.php';
+            form.submit(); // Submit the form to add to cart
             // You might want to redirect to checkout page after adding to cart
             // window.location.href = 'checkout.php';
         }

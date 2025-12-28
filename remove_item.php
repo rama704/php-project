@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart_id'])) {
         $stmt->bind_param("ii", $cart_id, $user_id);
     } else {
         $sql = "DELETE FROM cart WHERE id = ? AND session_id = ?";
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("is", $cart_id, $session_id);
     }
 
