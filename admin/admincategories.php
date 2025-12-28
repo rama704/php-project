@@ -1,6 +1,8 @@
 <?php
 // 1. Database Connection
 require_once '../includes/db.connection.php';
+require_once 'admin_auth.php';
+
 $db = Database::getInstance();
 $conn = $db->getConnection();
 $category_count = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM categories"));
@@ -30,7 +32,7 @@ $result = mysqli_query($conn, $query);
         </div>
         
         <nav class="sidebar-nav">
-            <a href="dashboard.php" class="nav-item">
+            <a href="admindashboard.php" class="nav-item">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </a>
@@ -47,18 +49,14 @@ $result = mysqli_query($conn, $query);
                 <i class="fas fa-shopping-cart"></i>
                 <span>Orders</span>
             </a>
-            <a href="users.php" class="nav-item">
+            <a href="adminusers.php" class="nav-item">
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
-            <a href="settings.php" class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <a href="logout.php" class="nav-item logout">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+            <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+</a>
         </nav>
     </aside>
 
@@ -211,7 +209,25 @@ $result = mysqli_query($conn, $query);
             });
         }
 
-       
+       /* Logout Confirmation */
+function confirmLogout(event) {
+    event.preventDefault();
+    
+    Swal.fire({
+        title: 'Logout?',
+        text: 'Are you sure you want to logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'logout.php';
+        }
+    });
+}
     </script>
 
 </body>

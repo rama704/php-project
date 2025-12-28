@@ -1,6 +1,8 @@
 <?php
-session_start();
+
 require_once '../includes/db.connection.php';
+require_once 'admin_auth.php';
+
 
 
 $db = Database::getInstance();
@@ -85,20 +87,20 @@ $conn->close();
             <span>Orders</span>
             <span class="badge"><?php echo $stats['orders']; ?></span>
         </a>
-        <a href="users.php" class="nav-item">
+        <a href="adminusers.php" class="nav-item">
             <i class="fas fa-users"></i>
             <span>Users</span>
             <span class="badge"><?php echo $stats['users']; ?></span>
         </a>
-        <a href="reviews.php" class="nav-item">
+        <a href="adminreviews.php" class="nav-item">
             <i class="fas fa-star"></i>
             <span>Reviews</span>
             <span class="badge"><?php echo $stats['reviews']; ?></span>
         </a>
-        <a href="../logout.php" class="nav-item logout">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
+       <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+    </a>
     </nav>
 </div>
 
@@ -181,6 +183,7 @@ $conn->close();
                     <p>Reviews</p>
                 </div>
             </div>
+            
 
         </div>
 
@@ -238,7 +241,7 @@ $conn->close();
     </div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -255,6 +258,25 @@ document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.add('active');
     }
 });
+/* Logout Confirmation */
+function confirmLogout(event) {
+    event.preventDefault();
+    
+    Swal.fire({
+        title: 'Logout?',
+        text: 'Are you sure you want to logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'logout.php';
+        }
+    });
+}
 </script>
 
 </body>

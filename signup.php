@@ -51,20 +51,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $stmt = $conn->prepare("INSERT INTO users (name, email, password, role, phone_number, date_of_birth) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss", $name, $email, $hashed_password, $role, $mobile, $dob);
 
-    if ($stmt->execute()) {
-header(header:"Location: /php-project/login.php");
- exit();
-
+    if($stmt->execute()) {
+        header("Location: login.php?signup=success");
+        exit;
     } else {
-    die("Insert failed: " . $stmt->error);
-}
-
-}
+        $errors[] = "Error during registration. Please try again.";
+    }
 
 
    if(isset($stmt)){
     $stmt->close();
 }
 $conn->close();
-}
+}}
 ?>

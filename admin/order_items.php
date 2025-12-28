@@ -1,5 +1,7 @@
 <?php
-session_start();
+
+require_once 'admin_auth.php';
+
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -212,10 +214,10 @@ $conn->close();
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
             </a>
-            <a href="logout.php" class="nav-item logout">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+           <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+</a>
         </nav>
     </aside>
 
@@ -332,6 +334,7 @@ $conn->close();
             </section>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -348,6 +351,25 @@ $conn->close();
                 sidebar.classList.toggle('active');
             });
         }
+        /* Logout Confirmation */
+function confirmLogout(event) {
+    event.preventDefault();
+    
+    Swal.fire({
+        title: 'Logout?',
+        text: 'Are you sure you want to logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'login.php';
+        }
+    });
+}
     </script>
 
 </body>
