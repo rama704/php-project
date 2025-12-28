@@ -210,20 +210,19 @@ $conn->close();
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
-          <a href="reviews.php" class="nav-item">
-            <i class="fas fa-star"></i>
-            <span>Reviews</span>
-            <span class="badge"><?php echo $stats['reviews']; ?></span>
-        </a>
-         <a href="adminslides.php" class="nav-item">
-            <i class="fas fa-star"></i>
-            <span>Slides</span>
-            <span class="badge"><?php echo $stats['slides']; ?></span>
-        </a>
-           <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
-    <i class="fas fa-sign-out-alt"></i>
-    <span>Logout</span>
-</a>
+            <a href="adminreviews.php" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Reviews</span>
+            </a>
+            <a href="adminslides.php" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Slides</span>
+            </a>
+            </a>
+            <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
         </nav>
     </aside>
 
@@ -358,24 +357,24 @@ $conn->close();
             });
         }
         /* Logout Confirmation */
-function confirmLogout(event) {
-    event.preventDefault();
-    
-    Swal.fire({
-        title: 'Logout?',
-        text: 'Are you sure you want to logout?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, logout',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = 'login.php';
+        function confirmLogout(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Logout?',
+                text: 'Are you sure you want to logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, logout',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'login.php';
+                }
+            });
         }
-    });
-}
     </script>
 
 </body>

@@ -15,6 +15,7 @@ $result = mysqli_query($conn, $query);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +23,7 @@ $result = mysqli_query($conn, $query);
     <link rel="stylesheet" href="admincategories.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <!-- ================= SIDEBAR ================= -->
@@ -30,7 +32,7 @@ $result = mysqli_query($conn, $query);
             <span class="logo-text">Dashboard</span>
             <span class="admin-badge">Admin</span>
         </div>
-        
+
         <nav class="sidebar-nav">
             <a href="admindashboard.php" class="nav-item">
                 <i class="fas fa-home"></i>
@@ -53,32 +55,30 @@ $result = mysqli_query($conn, $query);
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
-            <a href="reviews.php" class="nav-item">
-            <i class="fas fa-star"></i>
-            <span>Reviews</span>
-            <span class="badge"><?php echo $stats['reviews']; ?></span>
-        </a>
-         <a href="adminslides.php" class="nav-item">
-            <i class="fas fa-star"></i>
-            <span>Slides</span>
-            <span class="badge"><?php echo $stats['slides']; ?></span>
-        </a>
+            <a href="adminreviews.php" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Reviews</span>
+            </a>
+            <a href="adminslides.php" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Slides</span>
+            </a>
             <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
-    <i class="fas fa-sign-out-alt"></i>
-    <span>Logout</span>
-</a>
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
         </nav>
     </aside>
 
     <!-- ================= MAIN CONTENT ================= -->
     <main class="main-content" id="mainContent">
-        
+
         <!-- ================= TOP BAR ================= -->
         <div class="top-bar">
             <button class="toggle-sidebar" id="toggleSidebar">
                 <i class="fas fa-bars"></i>
             </button>
-            
+
             <div class="top-bar-right">
                 <div class="admin-profile">
                     <span>Welcome, Admin</span>
@@ -91,7 +91,7 @@ $result = mysqli_query($conn, $query);
 
         <!-- ================= DASHBOARD CONTAINER ================= -->
         <div class="dashboard-container">
-            
+
             <!-- ================= PAGE HEADER ================= -->
             <div class="page-header">
                 <div>
@@ -116,64 +116,67 @@ $result = mysqli_query($conn, $query);
                 </div>
 
                 <?php if (mysqli_num_rows($result) > 0): ?>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Category ID</th>
-                                <th>Category Name</th>
-                                <th>Description</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="categoriesTableBody">
-                            <?php 
-                            mysqli_data_seek($result, 0);
-                            while ($row = mysqli_fetch_assoc($result)): 
-                            ?>
-                            <tr>
-                                <td><strong>#<?= htmlspecialchars($row['id']) ?></strong></td>
-                                <td>
-                                    <div class="category-name">
-                                        <i class="fas fa-tag"></i>
-                                        <?= htmlspecialchars($row['name']) ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="category-description">
-                                        <?= htmlspecialchars($row['description']) ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="view_category.php?id=<?= $row['id'] ?>" class="action-btn view" title="View">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="admincategoriesedit.php?id=<?= $row['id'] ?>" class="action-btn edit" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <button onclick="deleteCategory(<?= $row['id'] ?>)" class="action-btn delete" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <?php else: ?>
-                <div class="empty-state">
-                    <div class="empty-state-content">
-                        <i class="fas fa-tags"></i>
-                        <h3>No Categories Available</h3>
-                        <p>Start by adding new categories to your store</p>
-                        <a href="admincategorycreate.php" class="add-btn-small">
-                            <i class="fas fa-plus"></i>
-                            Add First Category
-                        </a>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Category ID</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody">
+                                <?php
+                                mysqli_data_seek($result, 0);
+                                while ($row = mysqli_fetch_assoc($result)):
+                                    ?>
+                                    <tr>
+                                        <td><strong>#<?= htmlspecialchars($row['id']) ?></strong></td>
+                                        <td>
+                                            <div class="category-name">
+                                                <i class="fas fa-tag"></i>
+                                                <?= htmlspecialchars($row['name']) ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="category-description">
+                                                <?= htmlspecialchars($row['description']) ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a href="view_category.php?id=<?= $row['id'] ?>" class="action-btn view"
+                                                    title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="admincategoriesedit.php?id=<?= $row['id'] ?>" class="action-btn edit"
+                                                    title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <button onclick="deleteCategory(<?= $row['id'] ?>)" class="action-btn delete"
+                                                    title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div class="empty-state">
+                        <div class="empty-state-content">
+                            <i class="fas fa-tags"></i>
+                            <h3>No Categories Available</h3>
+                            <p>Start by adding new categories to your store</p>
+                            <a href="admincategorycreate.php" class="add-btn-small">
+                                <i class="fas fa-plus"></i>
+                                Add First Category
+                            </a>
+                        </div>
+                    </div>
                 <?php endif; ?>
 
             </section>
@@ -219,26 +222,27 @@ $result = mysqli_query($conn, $query);
             });
         }
 
-       /* Logout Confirmation */
-function confirmLogout(event) {
-    event.preventDefault();
-    
-    Swal.fire({
-        title: 'Logout?',
-        text: 'Are you sure you want to logout?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, logout',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = '../logout.php';
+        /* Logout Confirmation */
+        function confirmLogout(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Logout?',
+                text: 'Are you sure you want to logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, logout',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../logout.php';
+                }
+            });
         }
-    });
-}
     </script>
 
 </body>
+
 </html>

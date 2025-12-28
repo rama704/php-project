@@ -5,7 +5,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: products.php");
     exit;
 }
-$product_id =  $_GET['id'];
+$product_id = $_GET['id'];
 $db = Database::getInstance();
 $conn = $db->getConnection();
 /* ====== Get Product ====== */
@@ -1099,9 +1099,9 @@ $conn->close();
                 <a href="profile/profile1.php"><span>Profile</span></a>
                 <button class="icon-btn">🔍</button>
                 <a href="cart.php" class="icon-btn cart-btn">
-                               🛒
-                          <span class="cart-badge">3</span>
-                        </a>
+                    🛒
+                    <span class="cart-badge">3</span>
+                </a>
             </div>
         </div>
     </header>
@@ -1116,7 +1116,7 @@ $conn->close();
             ← Back to Shop
         </a>
         <div class="product-detail-card">
-            <form id="productForm" method="POST" action="checkout.php">
+            <form id="productForm" method="POST" action="add_to_cart.php">
                 <div class="product-layout">
                     <!-- Product Image Section -->
                     <div class="product-image-section">
@@ -1169,188 +1169,189 @@ $conn->close();
                             <!-- Buy Now Button -->
                             <button type="button" class="btn btn-primary" onclick="buyNow()">
                                 🛒 Buy Now
-                                 
                             </button>
+
                         </div>
                         <div class="success-message" id="successMessage">
                             ✓ Product added to cart successfully!
-<<<<<<< HEAD
 
-</div>
-=======
-                           
+
                         </div>
->>>>>>> 2e995569a3c187f46ef7deb74006a0c8ad71e450
+
+
+                    </div>
+
+                </div>
+        </div>
+        <!-- Product Details Table -->
+        <div class="details-section">
+            <h3>Product Specifications</h3>
+            <table class="details-table">
+                <tr>
+                    <td>Category</td>
+                    <td><?= htmlspecialchars($product['category_name']) ?></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><?= htmlspecialchars($product['description']) ?></td>
+                </tr>
+                <tr>
+                    <td>Original Price</td>
+                    <td>£<?= number_format($product['price'], 2) ?></td>
+                </tr>
+                <?php if ($discountPercent > 0): ?>
+                    <tr>
+                        <td>Discount Price</td>
+                        <td>£<?= number_format($finalPrice, 2) ?></td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <td>Stock Quantity</td>
+                    <td><?= $product['stock'] ?></td>
+                </tr>
+                <tr>
+                    <td>Date Added</td>
+                    <td><?= date("F d, Y", strtotime($product['created_at'])) ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <h3>Customer Reviews</h3>
+            <div class="review-stats">
+                <div class="review-summary">
+                    <div class="average-rating"><?= number_format($averageRating, 1) ?></div>
+                    <div class="total-reviews"><?= $reviewsCount ?> reviews</div>
+                    <div class="rating-stars">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <i class="fas fa-star <?= ($i <= round($averageRating)) ? 'filled' : '' ?>"></i>
+                        <?php endfor; ?>
                     </div>
                 </div>
-                <!-- Product Details Table -->
-                <div class="details-section">
-                    <h3>Product Specifications</h3>
-                    <table class="details-table">
-                        <tr>
-                            <td>Category</td>
-                            <td><?= htmlspecialchars($product['category_name']) ?></td>
-                        </tr>
-                        <tr>
-                            <td>Description</td>
-                            <td><?= htmlspecialchars($product['description']) ?></td>
-                        </tr>
-                        <tr>
-                            <td>Original Price</td>
-                            <td>£<?= number_format($product['price'], 2) ?></td>
-                        </tr>
-                        <?php if ($discountPercent > 0): ?>
-                            <tr>
-                                <td>Discount Price</td>
-                                <td>£<?= number_format($finalPrice, 2) ?></td>
-                            </tr>
-                        <?php endif; ?>
-                        <tr>
-                            <td>Stock Quantity</td>
-                            <td><?= $product['stock'] ?></td>
-                        </tr>
-                        <tr>
-                            <td>Date Added</td>
-                            <td><?= date("F d, Y", strtotime($product['created_at'])) ?></td>
-                        </tr>
-                    </table>
+                <div class="rating-distribution">
+                    <?php foreach ($ratingDistribution as $star => $count): ?>
+                        <?php $percentage = $reviewsCount > 0 ? ($count / $reviewsCount) * 100 : 0; ?>
+                        <div class="distribution-bar">
+                            <div class="distribution-label"><?= $star ?>★</div>
+                            <div class="distribution-progress">
+                                <div class="distribution-progress-bar" style="width: <?= $percentage ?>%">
+                                    <?= $count ?>
+                                </div>
+                            </div>
+                            <div class="distribution-count"><?= $count ?></div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
+            </div>
 
-                <!-- Reviews Section -->
-                <div class="reviews-section">
-                    <h3>Customer Reviews</h3>
-                    <div class="review-stats">
-                        <div class="review-summary">
-                            <div class="average-rating"><?= number_format($averageRating, 1) ?></div>
-                            <div class="total-reviews"><?= $reviewsCount ?> reviews</div>
-                            <div class="rating-stars">
+            <div class="review-list">
+                <h4>Latest Reviews</h4>
+                <?php if (!empty($reviewsList)): ?>
+                    <?php foreach ($reviewsList as $review): ?>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="review-author"><?= htmlspecialchars($review['name']) ?></div>
+                                <div class="review-date"><?= date("F d, Y", strtotime($review['created_at'])) ?></div>
+                            </div>
+                            <div class="review-rating">
                                 <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <i class="fas fa-star <?= ($i <= round($averageRating)) ? 'filled' : '' ?>"></i>
+                                    <i class="fas fa-star <?= ($i <= $review['rating']) ? 'filled' : '' ?>"></i>
                                 <?php endfor; ?>
                             </div>
-                        </div>
-                        <div class="rating-distribution">
-                            <?php foreach ($ratingDistribution as $star => $count): ?>
-                                <?php $percentage = $reviewsCount > 0 ? ($count / $reviewsCount) * 100 : 0; ?>
-                                <div class="distribution-bar">
-                                    <div class="distribution-label"><?= $star ?>★</div>
-                                    <div class="distribution-progress">
-                                        <div class="distribution-progress-bar" style="width: <?= $percentage ?>%">
-                                            <?= $count ?></div>
-                                    </div>
-                                    <div class="distribution-count"><?= $count ?></div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <div class="review-list">
-                        <h4>Latest Reviews</h4>
-                        <?php if (!empty($reviewsList)): ?>
-                            <?php foreach ($reviewsList as $review): ?>
-                                <div class="review-item">
-                                    <div class="review-header">
-                                        <div class="review-author"><?= htmlspecialchars($review['name']) ?></div>
-                                        <div class="review-date"><?= date("F d, Y", strtotime($review['created_at'])) ?></div>
-                                    </div>
-                                    <div class="review-rating">
-                                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                                            <i class="fas fa-star <?= ($i <= $review['rating']) ? 'filled' : '' ?>"></i>
-                                        <?php endfor; ?>
-                                    </div>
-                                    <div class="review-comment">
-                                        <?= htmlspecialchars($review['comment']) ?>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>No reviews yet. Be the first to review this product!</p>
-                        <?php endif; ?>
-                    </div>
-
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <?php if ($userCanReview): ?>
-                            <div class="review-form">
-                                <h4>Write a Review</h4>
-                                <form id="submitReviewForm" method="POST" action="submit_review.php">
-                                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                                    <div class="review-form-group">
-                                        <label for="review_rating">Your Rating</label>
-                                        <div class="rating-stars" id="ratingInput">
-                                            <i class="fas fa-star" data-value="1"></i>
-                                            <i class="fas fa-star" data-value="2"></i>
-                                            <i class="fas fa-star" data-value="3"></i>
-                                            <i class="fas fa-star" data-value="4"></i>
-                                            <i class="fas fa-star" data-value="5"></i>
-                                        </div>
-                                        <input type="hidden" name="rating" id="ratingValue" value="0" required>
-                                    </div>
-                                    <div class="review-form-group">
-                                        <label for="review_comment">Your Review</label>
-                                        <textarea name="comment" id="review_comment"
-                                            placeholder="Share your experience with this product..." required></textarea>
-                                    </div>
-                                    <div class="review-form-actions">
-                                        <button type="submit" class="btn btn-primary">Submit Review</button>
-                                    </div>
-                                    <div id="reviewMessage"></div>
-                                </form>
+                            <div class="review-comment">
+                                <?= htmlspecialchars($review['comment']) ?>
                             </div>
-                            <script>
-                                // Simple star rating selection
-                                document.querySelectorAll('#ratingInput i').forEach(star => {
-                                    star.addEventListener('click', function () {
-                                        const value = parseInt(this.getAttribute('data-value'));
-                                        document.querySelectorAll('#ratingInput i').forEach(s => s.classList.remove('filled'));
-                                        for (let i = 1; i <= value; i++) {
-                                            document.querySelector(`#ratingInput i[data-value="${i}"]`).classList.add('filled');
-                                        }
-                                        document.getElementById('ratingValue').value = value;
-                                    });
-                                });
-
-                                // Optional: Handle form submission via JS if needed
-                                document.getElementById('submitReviewForm').addEventListener('submit', function (e) {
-                                    e.preventDefault(); // Prevent default form submission for now
-                                    const formData = new FormData(this);
-                                    fetch('submit_review.php', {
-                                        method: 'POST',
-                                        body: formData
-                                    })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            const messageDiv = document.getElementById('reviewMessage');
-                                            if (data.success) {
-                                                messageDiv.className = 'review-message success';
-                                                messageDiv.textContent = data.message;
-                                                this.reset(); // Reset form
-                                                // Optional: Reload reviews section or add the new review dynamically
-                                            } else {
-                                                messageDiv.className = 'review-message error';
-                                                messageDiv.textContent = data.message;
-                                            }
-                                        })
-                                        .catch(error => {
-                                            console.error('Error:', error);
-                                            document.getElementById('reviewMessage').className = 'review-message error';
-                                            document.getElementById('reviewMessage').textContent = 'An error occurred. Please try again.';
-                                        });
-                                });
-                            </script>
-                        <?php else: ?>
-                            <div class="review-message error">
-                                You must purchase this product before you can leave a review.
-                            </div>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <div class="review-message error">
-                            Please <a href="login.php">log in</a> to write a review.
                         </div>
-                    <?php endif; ?>
-                </div> <!-- End Reviews Section -->
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No reviews yet. Be the first to review this product!</p>
+                <?php endif; ?>
+            </div>
 
-            </form>
-        </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <?php if ($userCanReview): ?>
+                    <div class="review-form">
+                        <h4>Write a Review</h4>
+                        <form id="submitReviewForm" method="POST" action="submit_review.php">
+                            <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                            <div class="review-form-group">
+                                <label for="review_rating">Your Rating</label>
+                                <div class="rating-stars" id="ratingInput">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                                <input type="hidden" name="rating" id="ratingValue" value="0" required>
+                            </div>
+                            <div class="review-form-group">
+                                <label for="review_comment">Your Review</label>
+                                <textarea name="comment" id="review_comment"
+                                    placeholder="Share your experience with this product..." required></textarea>
+                            </div>
+                            <div class="review-form-actions">
+                                <button type="submit" class="btn btn-primary">Submit Review</button>
+                            </div>
+                            <div id="reviewMessage"></div>
+                        </form>
+                    </div>
+                    <script>
+                        // Simple star rating selection
+                        document.querySelectorAll('#ratingInput i').forEach(star => {
+                            star.addEventListener('click', function () {
+                                const value = parseInt(this.getAttribute('data-value'));
+                                document.querySelectorAll('#ratingInput i').forEach(s => s.classList.remove('filled'));
+                                for (let i = 1; i <= value; i++) {
+                                    document.querySelector(`#ratingInput i[data-value="${i}"]`).classList.add('filled');
+                                }
+                                document.getElementById('ratingValue').value = value;
+                            });
+                        });
+
+                        // Optional: Handle form submission via JS if needed
+                        document.getElementById('submitReviewForm').addEventListener('submit', function (e) {
+                            e.preventDefault(); // Prevent default form submission for now
+                            const formData = new FormData(this);
+                            fetch('submit_review.php', {
+                                method: 'POST',
+                                body: formData
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    const messageDiv = document.getElementById('reviewMessage');
+                                    if (data.success) {
+                                        messageDiv.className = 'review-message success';
+                                        messageDiv.textContent = data.message;
+                                        this.reset(); // Reset form
+                                        // Optional: Reload reviews section or add the new review dynamically
+                                    } else {
+                                        messageDiv.className = 'review-message error';
+                                        messageDiv.textContent = data.message;
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    document.getElementById('reviewMessage').className = 'review-message error';
+                                    document.getElementById('reviewMessage').textContent = 'An error occurred. Please try again.';
+                                });
+                        });
+                    </script>
+                <?php else: ?>
+                    <div class="review-message error">
+                        You must purchase this product before you can leave a review.
+                    </div>
+                <?php endif; ?>
+            <?php else: ?>
+                <div class="review-message error">
+                    Please <a href="login.php">log in</a> to write a review.
+                </div>
+            <?php endif; ?>
+        </div> <!-- End Reviews Section -->
+
+        </form>
+    </div>
     </div>
     <!-- Footer -->
     <footer class="footer">
@@ -1377,18 +1378,12 @@ $conn->close();
     </footer>
     <script>
         function buyNow() {
-
-            // This function will add the product to the cart and redirect to checkout
-            document.getElementById('productForm').submit();
-            form.action='checkout.php';
-            form.submit(); // Submit the form to add to cart
-            // You might want to redirect to checkout page after adding to cart
-            // window.location.href = 'checkout.php';
-            form.action = 'checkout.php';
-                form.submit();
-
+            const form = document.getElementById('productForm');
+            form.action = 'checkout.php'; // غير المسار مؤقتًا
+            form.submit();
         }
     </script>
+
 </body>
 
 </html>

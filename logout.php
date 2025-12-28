@@ -15,4 +15,3 @@ session_destroy();
 // Redirect to index page
 header('Location: ../php-project/index/index.php');
 exit();
-?>

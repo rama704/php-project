@@ -295,13 +295,16 @@ $conn->close();
                 <i class="fas fa-shopping-cart"></i>
                 <span>Orders</span>
             </a>
-            <a href="reviews.php" class="nav-item active">
+
+            <a href="adminusers.php" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+            </a>
+            <a href="adminreviews.php" class="nav-item active">
                 <i class="fas fa-star"></i>
                 <span>Reviews</span>
             </a>
-            <a href="users.php" class="nav-item">
-                <i class="fas fa-users"></i>
-                <span>Users</span>
+            
             </a>
             <a href="settings.php" class="nav-item">
                 <i class="fas fa-cog"></i>
