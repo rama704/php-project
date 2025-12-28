@@ -288,7 +288,26 @@ body {
 .add-btn i {
     font-size: 16px;
 }
+/* Slider Toggle Button */
+.action-btn.slider-active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
 
+.action-btn.slider-active:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+}
+
+.action-btn.slider-inactive {
+    background: #e0e0e0;
+    color: #666;
+}
+
+.action-btn.slider-inactive:hover {
+    background: #667eea;
+    color: white;
+}
 /* ================= CONTENT SECTION ================= */
 .content-section {
     background: var(--white);

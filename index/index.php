@@ -22,7 +22,7 @@ if ($stmt->execute()) {
 }
 // جلب المنتجات للسلايدز الرئيسي
 $queryslides = "
-SELECT title, subtitle, badge, image, product_id
+SELECT title, subtitle, badge, image, id
 FROM slides
 ";
 $stmtslides = $conn->prepare($queryslides);
@@ -98,7 +98,7 @@ $conn->close();
                         <span class="badge"><?php echo htmlspecialchars($slide['badge']); ?></span>
                         <h1><?php echo htmlspecialchars($slide['title']); ?></h1>
                         <h2><?php echo htmlspecialchars($slide['subtitle']); ?></h2>
-<a href="../product.php?id=<?php echo $slide['product_id']; ?>">Shop Now</a>
+                        <a href="../product_details.php?id=<?php echo $slide['id']; ?>" class="btn">Shop Now</a>
                     </div>
                     <div class="slide-image">
                         <div class="speaker-main">

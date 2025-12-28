@@ -295,17 +295,14 @@ $conn->close();
                 <i class="fas fa-shopping-cart"></i>
                 <span>Orders</span>
             </a>
-            <a href="reviews.php" class="nav-item active">
-                <i class="fas fa-star"></i>
-                <span>Reviews</span>
-            </a>
+           
             <a href="users.php" class="nav-item">
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
-            <a href="settings.php" class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
+            <a href="adminreviews.php" class="nav-item active">
+                <i class="fas fa-star"></i>
+                <span>Reviews</span>
             </a>
             <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
                 <i class="fas fa-sign-out-alt"></i>

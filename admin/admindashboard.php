@@ -98,22 +98,11 @@ $conn->close();
             <span>Reviews</span>
             <span class="badge"><?php echo $stats['reviews']; ?></span>
         </a>
-<<<<<<< HEAD
-         <a href="adminslides.php" class="nav-item">
-            <i class="fas fa-star"></i>
-            <span>Slides</span>
-            <span class="badge"><?php echo $stats['slides']; ?></span>
-        </a>
+         
         <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
         </a>
-=======
-       <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
-    <i class="fas fa-sign-out-alt"></i>
-    <span>Logout</span>
-    </a>
->>>>>>> 2e995569a3c187f46ef7deb74006a0c8ad71e450
     </nav>
 </div>
 

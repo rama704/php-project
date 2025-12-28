@@ -739,14 +739,21 @@ $conn->close();
                                 <tr>
                                     <td>
                                         <div class="cart-item-info">
-                                            <img src="images/<?= htmlspecialchars($item['image']) ?>"
-                                                alt="<?= htmlspecialchars($item['name']) ?>" class="cart-item-image">
+                                           <?php
+// إذا كان اسم الصورة يبدأ بـ "images/"، احذفه
+$image_path = $item['image'];
+if (strpos($image_path, 'images/') === 0) {
+    $image_path = substr($image_path, 7); // حذف "images/"
+}
+?>
+<img src="./index/images/<?= htmlspecialchars($image_path) ?>"
+     alt="<?= htmlspecialchars($item['name']) ?>" class="cart-item-image">
                                             <div class="cart-item-details">
                                                 <div class="cart-item-name"><?= htmlspecialchars($item['name']) ?></div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart-item-price">£<?= number_format($item['price'], 2) ?></td>
+                                    <td class="cart-item-price">$<?= number_format($item['price'], 2) ?></td>
                                     <td>
                                         <div class="cart-quantity">
                                             <button type="button" class="quantity-btn minus"
@@ -757,7 +764,7 @@ $conn->close();
                                                 onclick="updateQuantity(<?= $item['id'] ?>, 1)">+</button>
                                         </div>
                                     </td>
-                                    <td class="cart-subtotal">£<?= number_format($item['price'] * $item['quantity'], 2) ?></td>
+                                    <td class="cart-subtotal">$<?= number_format($item['price'] * $item['quantity'], 2) ?></td>
                                     <td>
                                         <button type="button" class="cart-remove"
                                             onclick="removeItem(<?= $item['id'] ?>)">🗑️</button>
@@ -776,15 +783,15 @@ $conn->close();
                     <h3>Cart Summary</h3>
                     <div class="summary-row">
                         <div class="summary-label">Subtotal</div>
-                        <div class="summary-value">£<?= number_format($cart_total, 2) ?></div>
+                        <div class="summary-value">$<?= number_format($cart_total, 2) ?></div>
                     </div>
                     <div class="summary-row">
                         <div class="summary-label">Shipping</div>
-                        <div class="summary-value">£0.00</div>
+                        <div class="summary-value">$0.00</div>
                     </div>
                     <div class="summary-row cart-total">
                         <div class="summary-label">Total</div>
-                        <div class="summary-value">£<?= number_format($cart_total, 2) ?></div>
+                        <div class="summary-value">$<?= number_format($cart_total, 2) ?></div>
                     </div>
                 </div>
             <?php endif; ?>

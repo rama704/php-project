@@ -118,7 +118,7 @@ $conn->close();
                 <div class="nav-icons">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="../PHP-PROJECT/profile/profile1.php">Profile</a>
-                        <a href="../login.php" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
+                        <a href="../php-project/login.php" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
                     <?php else: ?>
                         <a href="../login.php">Login</a>
                         <a href="../register.php">Register</a>
@@ -219,8 +219,14 @@ $conn->close();
                             <div class="product-image">
                                 <div class="product-img">
                                     <?php if (!empty($product['image'])): ?>
-                                        <img src="../index/images/<?= htmlspecialchars($product['image']) ?>"
-                                            alt="<?= htmlspecialchars($product['name']) ?>">
+                                     <?php
+// إذا كان اسم الصورة يبدأ بـ "images/"، احذفه
+$image_path = $product['image'];
+if (strpos($image_path, 'images/') === 0) {
+    $image_path = substr($image_path, 7); // حذف "images/"
+}
+?>
+<img src="/php-project/index/images/<?= htmlspecialchars($image_path) ?>" ...     alt="<?= htmlspecialchars($product['name']) ?>">
                                     <?php else: ?>
                                         <i class="fas fa-box"></i>
                                     <?php endif; ?>
@@ -241,9 +247,9 @@ $conn->close();
                             <div class="product-info">
                                 <h3><?= htmlspecialchars($product['name']) ?></h3>
                                 <div class="product-price">
-                                    <span class="current-price">£<?= number_format($finalPrice, 2) ?></span>
+                                    <span class="current-price">$<?= number_format($finalPrice, 2) ?></span>
                                     <?php if ($hasDiscount): ?>
-                                        <span class="old-price">£<?= number_format($product['price'], 2) ?></span>
+                                        <span class="old-price">$<?= number_format($product['price'], 2) ?></span>
                                     <?php endif; ?>
                                 </div>
                             </div>
