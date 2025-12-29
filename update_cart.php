@@ -37,11 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quantities']) && is_a
 
 $conn->close();
 
-// إعادة التوجيه لـ cart.php بعد التحديث
+
 header("Location: cart.php");
 exit;
 
-// دالة منفصلة لحذف عنصر
 function removeCartItem($conn, $cart_id, $user_id, $session_id) {
     if ($user_id) {
         $sql = "DELETE FROM cart WHERE id = ? AND user_id = ?";

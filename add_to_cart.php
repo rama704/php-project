@@ -13,11 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db = Database::getInstance();
     $conn = $db->getConnection();
 
-    // Get user ID or session ID
+   
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     $session_id = session_id();
 
-    // Check if item already exists in cart
     if ($user_id) {
         $sql = "SELECT id, quantity FROM cart WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($sql);
@@ -32,14 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $existing_item = $result->fetch_assoc();
 
     if ($existing_item) {
-        // Update existing item
+       
         $new_quantity = $existing_item['quantity'] + $quantity;
         $update_sql = "UPDATE cart SET quantity = ?, created_at = NOW() WHERE id = ?";
         $update_stmt = $conn->prepare($update_sql);
         $update_stmt->bind_param("ii", $new_quantity, $existing_item['id']);
         $update_stmt->execute();
     } else {
-        // Insert new item
+        
         if ($user_id) {
             $insert_sql = "INSERT INTO cart (user_id, product_id, quantity, created_at) VALUES (?, ?, ?, NOW())";
             $insert_stmt = $conn->prepare($insert_sql);
@@ -54,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $conn->close();
 
-    // Redirect back to product details page or show success message
+    
     header("Location: product_details.php?id=" . $product_id);
     exit;
 }

@@ -175,6 +175,8 @@ body {
     box-shadow: 0 4px 12px rgba(11, 11, 11, 0.2);
 }
 
+
+
 /* تصميم خاص لزر Register */
 .nav-icons a[href*="register"] {
     background: var(--accent-color);

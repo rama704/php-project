@@ -98,7 +98,7 @@ $conn->close();
                         <span class="badge"><?php echo htmlspecialchars($slide['badge']); ?></span>
                         <h1><?php echo htmlspecialchars($slide['title']); ?></h1>
                         <h2><?php echo htmlspecialchars($slide['subtitle']); ?></h2>
-                        <a href="../product_details.php?id=<?php echo $slide['id']; ?>" class="btn">Shop Now</a>
+                       
                     </div>
                     <div class="slide-image">
                         <div class="speaker-main">

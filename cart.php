@@ -5,25 +5,23 @@ require_once __DIR__ . '/includes/db.connection.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-// Get user ID or session ID
-$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+$user_id = $_SESSION['user_id'] ?? null;
 $session_id = session_id();
 
-// Fetch cart items based on user_id or session_id
 if ($user_id) {
     $sql = "SELECT c.*, p.name, p.price, p.image
-FROM cart c
-JOIN products p ON c.product_id = p.id
-WHERE c.user_id = ?
-ORDER BY c.created_at DESC";
+            FROM cart c
+            JOIN products p ON c.product_id = p.id
+            WHERE c.user_id = ?
+            ORDER BY c.created_at DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
 } else {
     $sql = "SELECT c.*, p.name, p.price, p.image
-FROM cart c
-JOIN products p ON c.product_id = p.id
-WHERE c.session_id = ?
-ORDER BY c.created_at DESC";
+            FROM cart c
+            JOIN products p ON c.product_id = p.id
+            WHERE c.session_id = ?
+            ORDER BY c.created_at DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $session_id);
 }
@@ -41,6 +39,12 @@ foreach ($cart_items as $item) {
 }
 
 $conn->close();
+
+// Handle messages from remove_item.php
+$message = '';
+if (isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +53,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart - Techify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Include your existing CSS styles here (navbar, footer, etc.) */
         /* You can copy the styles from product_details.php or link to a shared CSS file */
@@ -675,6 +680,25 @@ $conn->close();
                 font-size: 28px;
             }
         }
+
+        /* Added styles for message display */
+        .message {
+            padding: 15px;
+            margin: 20px 20px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 
@@ -692,13 +716,13 @@ $conn->close();
                     <li><a href="index/index.php#contact">CONTACT US</a></li>
                 </ul>
             </nav>
-            <div class="nav-icons">
+               <div class="nav-icons">
                 <a href="profile/profile1.php"><span>Profile</span></a>
                 <button class="icon-btn">🔍</button>
-                <button class="icon-btn cart-btn">
+                <a href="cart.php" class="icon-btn cart-btn">
                     🛒
                     <span class="cart-badge">3</span>
-                </button>
+                </a>
             </div>
         </div>
     </header>
@@ -712,11 +736,19 @@ $conn->close();
         <a href="products.php" class="back-button">
             ← Continue Shopping
         </a>
+
+        <!-- Display message if exists -->
+        <?php if ($message): ?>
+        <div class="message <?= strpos($message, 'successfully') !== false ? 'success' : 'error' ?>">
+            <?= $message ?>
+        </div>
+        <?php endif; ?>
+
         <div class="cart-card">
             <?php if (empty($cart_items)): ?>
                 <!-- Empty Cart Message -->
                 <div class="empty-cart">
-                    <i>🛒</i>
+                    <i class="fas fa-shopping-cart"></i>
                     <h3>Your Cart is Empty</h3>
                     <p>Looks like you haven't added anything to your cart yet</p>
                     <a href="products.php" class="btn btn-primary">START SHOPPING</a>

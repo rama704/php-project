@@ -1,5 +1,7 @@
 <?php
 require_once 'admin_auth.php';
+require_once '../includes/db.connection.php';
+
 
 
 if (!isset($_SESSION['user_id'])) {

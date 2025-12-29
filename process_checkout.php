@@ -1,25 +1,25 @@
 <?php
 session_start();
 
-// التحقق من تسجيل الدخول
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 $user_id = $_SESSION['user_id'];
 
-// تضمين اتصال قاعدة البيانات
+
 require_once __DIR__ . '/includes/db.connection.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-// التحقق من إرسال النموذج
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: checkout.php");
     exit;
 }
 
-// استلام البيانات
+
 $cardholder_name = trim($_POST['cardholder_name'] ?? '');
 $card_number = trim($_POST['card_number'] ?? '');
 $expiry_date = trim($_POST['expiry_date'] ?? '');
@@ -30,14 +30,13 @@ $billing_phone = trim($_POST['billing_phone'] ?? '');
 $billing_address = trim($_POST['billing_address'] ?? '');
 $total_amount = floatval($_POST['total_amount'] ?? 0);
 
-// التحقق من وجود البيانات الأساسية
+
 if (empty($cardholder_name) || empty($card_number) || empty($cvv) || empty($billing_address) || $total_amount <= 0) {
     header("Location: checkout.php?error=missing_fields");
     exit;
 }
 
-// 1. إنشاء طلب جديد في جدول orders
-// 1. إنشاء طلب جديد في جدول orders
+
 $stmt = $conn->prepare("
     INSERT INTO orders (user_id, total_price, status, created_at)
     VALUES (?, ?, 'completed', NOW())
@@ -50,7 +49,7 @@ if (!$order_id) {
     exit;
 }
 
-// 2. جلب عناصر السلة
+
 $stmt = $conn->prepare("
     SELECT c.product_id, c.quantity, p.price
     FROM cart c
@@ -66,7 +65,6 @@ if (empty($cartItems)) {
     exit;
 }
 
-// 3. إدخال عناصر الطلب في order_items
 $stmt = $conn->prepare("
     INSERT INTO order_items (order_id, product_id, quantity, price)
     VALUES (?, ?, ?, ?)
@@ -81,7 +79,7 @@ foreach ($cartItems as $item) {
     ]);
 }
 
-// 4. تخزين بيانات الدفع في fake_payment_details
+
 $stmt = $conn->prepare("
     INSERT INTO fake_payment_details (order_id, cardholder_name, card_number, expiry_date, cvv, address)
     VALUES (?, ?, ?, ?, ?, ?)
@@ -95,11 +93,10 @@ $stmt->execute([
     $billing_address
 ]);
 
-// 5. مسح السلة
 $stmt = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
 $stmt->execute([$user_id]);
 
-// 6. إعادة التوجيه إلى الفاتورة
+
 header("Location: invoice.php?id=" . $order_id);
 exit;
 ?>

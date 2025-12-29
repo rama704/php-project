@@ -10,7 +10,6 @@ if (!isset($_SESSION["user_id"])) {
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-// استعلام لجلب جميع المراجعات مع بيانات المستخدم والمنتج
 $sql = "SELECT 
             r.id, r.rating, r.comment, r.created_at,
             u.name AS username, u.email,

@@ -4,12 +4,12 @@ require_once 'includes/db.connection.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-// ================== إعدادات Pagination ==================
+
 $products_per_page = 8; // عدد المنتجات في كل صفحة
 $current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $offset = ($current_page - 1) * $products_per_page;
 
-// ================== فلترة البحث ==================
+
 $filters = [
     'search' => $_GET['search'] ?? '',
     'category' => $_GET['category'] ?? '',
@@ -22,13 +22,13 @@ $search = $filters['search'];
 $category = $filters['category'];
 $sort = $filters['sort'];
 
-// بناء استعلام SQL ديناميكي
+
 $sql = "SELECT * FROM products WHERE 1=1";
 $count_sql = "SELECT COUNT(*) as total FROM products WHERE 1=1";
 $params = [];
 $types = "";
 
-// فلترة البحث والفئة والسعر
+
 if ($filters['search']) {
     $sql .= " AND name LIKE ?";
     $count_sql .= " AND name LIKE ?";
@@ -50,7 +50,7 @@ if ($filters['price'] !== '') {
     $types .= "d";
 }
 
-// حساب إجمالي عدد المنتجات
+
 $count_stmt = $conn->prepare($count_sql);
 if ($params) {
     $count_stmt->bind_param($types, ...$params);
@@ -59,7 +59,7 @@ $count_stmt->execute();
 $total_products = $count_stmt->get_result()->fetch_assoc()['total'];
 $total_pages = ceil($total_products / $products_per_page);
 
-// ترتيب النتائج
+
 $order = match ($filters['sort']) {
     'price_low' => 'price ASC',
     'price_high' => 'price DESC',
@@ -68,10 +68,10 @@ $order = match ($filters['sort']) {
 };
 $sql .= " ORDER BY $order";
 
-// إضافة LIMIT و OFFSET
+
 $sql .= " LIMIT ? OFFSET ?";
 
-// تنفيذ الاستعلام
+
 $stmt = $conn->prepare($sql);
 if ($params) {
     $types .= "ii";
@@ -84,7 +84,7 @@ if ($params) {
 $stmt->execute();
 $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// جلب الفئات
+
 $categories = $conn->query("SELECT * FROM categories ORDER BY name ASC")->fetch_all(MYSQLI_ASSOC);
 
 $conn->close();

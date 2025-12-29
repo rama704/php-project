@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// التحقق من تسجيل الدخول
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_to'] = 'checkout.php';
     header("Location: login.php");
@@ -9,12 +8,12 @@ if (!isset($_SESSION['user_id'])) {
 }
 $user_id = $_SESSION['user_id'];
 
-// تضمين اتصال قاعدة البيانات
+
 require_once __DIR__ . '/includes/db.connection.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-// جلب عناصر السلة
+
 $stmt = $conn->prepare("
     SELECT c.id AS cart_id, c.product_id, c.quantity, 
            p.name, p.price, p.image,
@@ -29,20 +28,20 @@ $stmt->execute();
 $result = $stmt->get_result();
 $cartItems = $result->fetch_all(MYSQLI_ASSOC);
 
-// التحقق إذا السلة فارغة
+
 if (empty($cartItems)) {
     header("Location: cart.php");
     exit;
 }
 
-// حساب الإجماليات
+
 $totalPrice = 0;
 $totalQuantity = 0;
 foreach ($cartItems as $item) {
     $totalPrice += $item['subtotal'];
     $totalQuantity += $item['quantity'];
 }
-$tax = $totalPrice * 0.15; // ضريبة 15%
+$tax = $totalPrice * 0.15; 
 $grandTotal = $totalPrice + $tax;
 
 $conn->close();
